@@ -23,10 +23,31 @@
                     <i class="ti ti-dashboard"></i>
                 </li>
 
+
                 <li class="pc-item">
-                    <a href="{{ route('warga.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-typography"></i></span>
-                        <span class="pc-mtext">Data Warga</span>
+                    <a href="{{ route('rt.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-map-pin"></i></span>
+                        <span class="pc-mtext">Data RT</span>
+                    </a>
+                </li>
+                 <li class="pc-item">
+                    <a href="{{ route('rw.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-map"></i></span>
+                        <span class="pc-mtext">Data RW</span>
+                    </a>
+                </li>
+
+                <li class="pc-item">
+                    <a href="{{ route('perangkat_desa.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
+                        <span class="pc-mtext">Perangkat</span>
+                    </a>
+                </li>
+
+                 <li class="pc-item">
+                    <a href="{{ route('lembaga_desa.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
+                        <span class="pc-mtext">Lembaga</span>
                     </a>
                 </li>
 
@@ -44,20 +65,15 @@
                     </a>
                 </li>
 
-                <li class="pc-item">
-                    <a href="{{ route('rw.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-map"></i></span>
-                        <span class="pc-mtext">Data RW</span>
-                    </a>
-                </li>
+
+
 
                 <li class="pc-item">
-                    <a href="{{ route('rt.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-map-pin"></i></span>
-                        <span class="pc-mtext">Data RT</span>
+                    <a href="{{ route('warga.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-typography"></i></span>
+                        <span class="pc-mtext">Data Warga</span>
                     </a>
                 </li>
-
             </ul>
 
             {{-- TOMBOL LOGOUT --}}

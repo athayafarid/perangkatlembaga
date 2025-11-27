@@ -39,7 +39,8 @@
                 </thead>
 
                 <tbody>
-                    @forelse($lembaga as $l)
+                   @foreach($data as $l)
+
                         <tr>
                             <td>{{ ($lembaga->currentPage()-1)*$lembaga->perPage()+$loop->iteration }}</td>
                             <td>{{ $l->nama_lembaga }}</td>
