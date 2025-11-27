@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class LembagaDesa extends Model
 {
@@ -11,6 +12,7 @@ class LembagaDesa extends Model
 
     protected $table = 'lembaga_desa';
     protected $primaryKey = 'lembaga_id';
+
     protected $fillable = [
         'nama_lembaga',
         'deskripsi',
@@ -18,13 +20,21 @@ class LembagaDesa extends Model
         'logo'
     ];
 
-    public function jabatanLembaga()
+    public function scopeFilter(Builder $query, $request, array $columns)
     {
-        return $this->hasMany(JabatanLembaga::class, 'lembaga_id', 'lembaga_id');
+        return $query; // lembaga tidak punya filter
     }
 
-    public function anggotaLembaga()
+    public function scopeSearch(Builder $query, $request, array $columns)
     {
-        return $this->hasMany(AnggotaLembaga::class, 'lembaga_id', 'lembaga_id');
+        if ($request->filled('search')) {
+
+            $query->where(function ($q) use ($request, $columns) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'LIKE', '%' . $request->search . '%');
+                }
+            });
+        }
+        return $query;
     }
 }

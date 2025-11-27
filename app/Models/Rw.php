@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Rw extends Model
 {
@@ -11,21 +12,43 @@ class Rw extends Model
 
     protected $table = 'rw';
     protected $primaryKey = 'rw_id';
+
     protected $fillable = [
         'nomor_rw',
         'ketua_rw_warga_id',
         'keterangan'
     ];
 
-    // Relasi ke warga (ketua RW)
     public function ketuaRw()
     {
         return $this->belongsTo(Warga::class, 'ketua_rw_warga_id', 'warga_id');
     }
 
-    // Relasi ke RT
     public function rts()
     {
         return $this->hasMany(Rt::class, 'rw_id', 'rw_id');
+    }
+
+    public function scopeFilter(Builder $query, $request, array $columns)
+    {
+        foreach ($columns as $column) {
+            if ($request->filled($column)) {
+                $query->where($column, $request->input($column));
+            }
+        }
+        return $query;
+    }
+
+    public function scopeSearch(Builder $query, $request, array $columns)
+    {
+        if ($request->filled('search')) {
+
+            $query->where(function ($q) use ($request, $columns) {
+                foreach ($columns as $column) {
+                    $q->orWhere($column, 'LIKE', '%' . $request->search . '%');
+                }
+            });
+        }
+        return $query;
     }
 }

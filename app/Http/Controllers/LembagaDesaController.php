@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\LembagaDesa;
@@ -7,10 +6,13 @@ use Illuminate\Http\Request;
 
 class LembagaDesaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lembaga = LembagaDesa::all();
-        return view('lembaga.index', compact('lembaga'));
+        $data = LembagaDesa::latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('lembaga.index', compact('data'));
     }
 
     public function create()
@@ -22,7 +24,7 @@ class LembagaDesaController extends Controller
     {
         $request->validate([
             'nama_lembaga' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+            'keterangan'   => 'nullable|string',
         ]);
 
         LembagaDesa::create($request->all());
@@ -38,7 +40,7 @@ class LembagaDesaController extends Controller
     {
         $request->validate([
             'nama_lembaga' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+            'keterangan'   => 'nullable|string',
         ]);
 
         $lembaga->update($request->all());

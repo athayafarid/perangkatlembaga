@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('title', isset($lembaga) ? 'Edit Lembaga' : 'Tambah Lembaga')
 @section('content')
 <div class="container mt-5">

@@ -11,6 +11,27 @@ class DashboardController extends Controller
     public function index()
     {
         return view("admin.dashboard");
+           $totalWarga = Warga::count();
+
+        // Hitung berdasarkan gender
+        $totalLaki = Warga::where('jenis_kelamin', 'Laki-laki')->count();
+        $totalPerempuan = Warga::where('jenis_kelamin', 'Perempuan')->count();
+
+        // Hitung agama
+        $agama = Warga::selectRaw('agama, COUNT(*) as total')
+                        ->groupBy('agama')
+                        ->get();
+
+        // 5 data warga terbaru
+        $recent = Warga::orderBy('warga_id', 'DESC')->take(5)->get();
+
+        return view('admin.dashboard.index', [
+            'totalWarga'      => $totalWarga,
+            'totalLaki'       => $totalLaki,
+            'totalPerempuan'  => $totalPerempuan,
+            'agama'           => $agama,
+            'recent'          => $recent,
+        ]);
     }
 
     /**

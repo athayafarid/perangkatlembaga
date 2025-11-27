@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Rw;
@@ -8,9 +7,13 @@ use Illuminate\Http\Request;
 
 class RwController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Rw::with('ketuaRw')->get();
+        $data = Rw::with('ketuaRw')
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('rw.index', compact('data'));
     }
 
@@ -32,7 +35,7 @@ class RwController extends Controller
 
     public function edit($id)
     {
-        $rw = Rw::findOrFail($id);
+        $rw    = Rw::findOrFail($id);
         $warga = Warga::all();
         return view('rw.edit', compact('rw', 'warga'));
     }

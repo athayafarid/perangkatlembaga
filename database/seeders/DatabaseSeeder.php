@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +12,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Seeder default Laravel
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        // Tambahkan pemanggilan seeder kamu DI BAWAH
+        $this->call([
+            RwSeeder::class,
+            RtSeeder::class,
+            PerangkatDesaSeeder::class,
+            LembagaDesaSeeder::class,
+            JabatanLembagaSeeder::class,
+            AnggotaLembagaSeeder::class,
         ]);
     }
 }

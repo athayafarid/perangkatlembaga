@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 @section('title', 'Edit RT')
 
 @section('content')
@@ -59,4 +59,5 @@
         </div>
     </div>
 </div>
+
 @endsection

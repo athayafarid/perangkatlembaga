@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\AnggotaLembaga;
@@ -9,10 +8,14 @@ use Illuminate\Http\Request;
 
 class AnggotaLembagaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $anggota = AnggotaLembaga::with(['lembaga', 'jabatan'])->get();
-        return view('anggota.index', compact('anggota'));
+        $data = AnggotaLembaga::with(['lembaga', 'jabatan'])
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('anggota.index', compact('data'));
     }
 
     public function create()
@@ -25,12 +28,12 @@ class AnggotaLembagaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama'       => 'required|string|max:255',
             'jabatan_id' => 'required|exists:jabatan_lembagas,id',
             'lembaga_id' => 'required|exists:lembaga_desas,id',
-            'no_telp' => 'nullable|string|max:15',
-            'email' => 'nullable|email',
-            'alamat' => 'nullable|string'
+            'no_telp'    => 'nullable|string|max:15',
+            'email'      => 'nullable|email',
+            'alamat'     => 'nullable|string',
         ]);
 
         AnggotaLembaga::create($request->all());
@@ -47,12 +50,12 @@ class AnggotaLembagaController extends Controller
     public function update(Request $request, AnggotaLembaga $anggota)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama'       => 'required|string|max:255',
             'jabatan_id' => 'required|exists:jabatan_lembagas,id',
             'lembaga_id' => 'required|exists:lembaga_desas,id',
-            'no_telp' => 'nullable|string|max:15',
-            'email' => 'nullable|email',
-            'alamat' => 'nullable|string'
+            'no_telp'    => 'nullable|string|max:15',
+            'email'      => 'nullable|email',
+            'alamat'     => 'nullable|string',
         ]);
 
         $anggota->update($request->all());

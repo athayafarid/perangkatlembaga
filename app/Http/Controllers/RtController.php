@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Rt;
@@ -9,15 +8,19 @@ use Illuminate\Http\Request;
 
 class RtController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Rt::with(['rw', 'ketuaRt'])->latest()->paginate(10);
+        $data = Rt::with(['rw', 'ketuaRt'])
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('rt.index', compact('data'));
     }
 
     public function create()
     {
-        $rw = Rw::all();
+        $rw    = Rw::all();
         $warga = Warga::all();
         return view('rt.create', compact('rw', 'warga'));
     }
@@ -26,7 +29,7 @@ class RtController extends Controller
     {
         $request->validate([
             'nomor_rt' => 'required',
-            'rw_id' => 'required',
+            'rw_id'    => 'required',
         ]);
 
         Rt::create($request->all());
@@ -36,8 +39,8 @@ class RtController extends Controller
 
     public function edit($id)
     {
-        $rt = Rt::findOrFail($id);
-        $rw = Rw::all();
+        $rt    = Rt::findOrFail($id);
+        $rw    = Rw::all();
         $warga = Warga::all();
         return view('rt.edit', compact('rt', 'rw', 'warga'));
     }
