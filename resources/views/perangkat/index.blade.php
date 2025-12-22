@@ -3,152 +3,126 @@
 
 @section('content')
 
-    <style>
-        .card-form {
-            border: none;
-            border-radius: 18px;
-            box-shadow: 0 6px 18px rgba(13, 60, 97, 0.12);
-            overflow: hidden;
-        }
 
-        .card-header-green {
-            background: linear-gradient(90deg, #198754 0%, #28b76b 100%);
-            padding: 20px 24px;
-            color: #fff;
-            border: none;
-        }
 
-        .search-input:focus {
-            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, .25);
-            border-color: #198754;
-        }
-
-        .table thead {
-            background: #d4f5e2;
-        }
-
-        .btn-action {
-            border-radius: 8px;
-            padding: 6px 10px;
-        }
-    </style>
-
-    <div class="pc-container">
+    <div class="pc-container perangkat-page rw-page">
         <div class="pc-content">
 
             <div class="container mt-4">
 
-                <div class="card card-form">
+                <div class="card card-custom">
+                    <div class="card-header-blue d-flex justify-content-between align-items-center">
+                        <div class="header-text">
+                            <h4>Data Perangkat Desa</h4>
+                            <small>Kelola data perangkat desa</small>
+                        </div>
 
-                    {{-- HEADER --}}
-                    <div class="card-header-green d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">
-                            <i class="bi bi-people-fill"></i> Data Perangkat Desa
-                        </h4>
                         <a href="{{ route('perangkat_desa.create') }}" class="btn btn-light btn-sm">
-                            <i class="bi bi-plus-lg"></i> Tambah
+                            <i class="bi bi-plus"></i> Tambah
                         </a>
                     </div>
 
-                    <div class="card-body p-4">
 
-                        {{-- SEARCH --}}
-                        <form method="GET" action="{{ route('perangkat_desa.index') }}" class="mb-4"
-                            style="max-width:380px;">
-                            <div class="input-group">
-                                <input type="text" name="q" value="{{ request('q') }}"
-                                    class="form-control search-input" placeholder="Cari nama perangkat...">
+                    {{-- SEARCH --}}
+                    <form method="GET" action="{{ route('perangkat_desa.index') }}" class="mb-4"
+                        style="max-width:420px;">
+                        <div class="input-group">
+                            <input type="text" name="q" value="{{ request('q') }}" class="form-control"
+                                placeholder="Cari nama perangkat...">
+                            <button class="btn btn-primary">
+                                <i class="bi bi-search"></i>
+                            </button>
 
-                                <button class="btn btn-success">
-                                    <i class="bi bi-search"></i>
-                                </button>
+                            @if (request('q'))
+                                <a href="{{ route('perangkat_desa.index') }}" class="btn btn-outline-secondary">
+                                    Clear
+                                </a>
+                            @endif
+                        </div>
+                    </form>
 
-                                @if (request('q'))
-                                    <a href="{{ route('perangkat_desa.index') }}"
-                                        class="btn btn-outline-secondary">Clear</a>
-                                @endif
+
+
+                    {{-- TABLE --}}
+                    <div class="row g-4 rw-card-grid">
+                        @forelse($data as $p)
+                            <div class="col-md-6 col-xl-4">
+                                <div class="rw-card h-100">
+
+                                    <!-- HEADER -->
+                                    <div class="rw-card-header">
+                                        <div class="rw-title d-flex align-items-center gap-2">
+                                            @if ($p->foto)
+                                                <img src="{{ asset('storage/' . $p->foto) }}"
+                                                    class="rounded-circle object-fit-cover" width="36" height="36">
+                                            @else
+                                                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+                                                    style="width:36px;height:36px;font-size:14px;">
+                                                    <i class="bi bi-person"></i>
+                                                </div>
+                                            @endif
+
+                                            <span>{{ $p->warga->nama ?? '-' }}</span>
+                                        </div>
+
+                                        <div class="rw-actions">
+                                            <a href="{{ route('perangkat_desa.edit', $p->perangkat_id) }}"
+                                                class="btn btn-icon btn-warning">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form id="delete-{{ $p->perangkat_id }}"
+                                                action="{{ route('perangkat_desa.destroy', $p->perangkat_id) }}"
+                                                method="POST" class="d-inline">
+                                                @csrf @method('DELETE')
+                                                <button type="button" class="btn btn-icon btn-danger"
+                                                    onclick="deleteConfirm('delete-{{ $p->perangkat_id }}')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <!-- BODY -->
+                                    <div class="rw-card-body">
+                                        <div class="rw-row">
+                                            <span class="label">Jabatan</span>
+                                            <span class="value">{{ $p->jabatan }}</span>
+                                        </div>
+
+                                        <div class="rw-row">
+                                            <span class="label">Periode</span>
+                                            <span class="value">
+                                                {{ $p->periode_mulai }} – {{ $p->periode_selesai }}
+                                            </span>
+                                        </div>
+
+                                        <div class="rw-desc">
+                                            {{ $p->keterangan ?? 'Tidak ada keterangan' }}
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                        </form>
-
-
-                        {{-- TABLE --}}
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle">
-                                <thead class="text-dark fw-semibold">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Foto</th>
-                                        <th>Nama</th>
-                                        <th>Jabatan</th>
-                                        <th>Periode</th>
-                                        <th>Keterangan</th>
-                                        <th width="150">Aksi</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    @forelse($data as $p)
-                                        <tr>
-                                            <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
-
-                                            <td>
-                                                @if ($p->foto)
-                                                    <img src="{{ asset('storage/' . $p->foto) }}" width="50"
-                                                        height="50" class="rounded-circle object-fit-cover">
-                                                @else
-                                                    <span class="text-muted">-</span>
-                                                @endif
-                                            </td>
-
-                                            <td>{{ $p->warga->nama ?? '-' }}</td>
-                                            <td>{{ $p->jabatan }}</td>
-                                            <td>{{ $p->periode_mulai }} - {{ $p->periode_selesai }}</td>
-                                            <td>{{ $p->keterangan ?? '-' }}</td>
-
-                                            <td>
-                                                <a href="{{ route('perangkat_desa.edit', $p->perangkat_id) }}"
-                                                    class="btn btn-warning btn-sm btn-action">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </a>
-
-                                                <form id="delete-{{ $p->perangkat_id }}"
-                                                    action="{{ route('perangkat_desa.destroy', $p->perangkat_id) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                    <button type="button" class="btn btn-danger btn-sm btn-action"
-                                                        onclick="deleteConfirm('delete-{{ $p->perangkat_id }}')">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                </form>
-
-                                            </td>
-
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center text-muted py-3">
-                                                Tidak ada data ditemukan.
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                        {{-- PAGINATION --}}
-                        <div class="d-flex justify-content-end mt-3">
-                            {{ $data->links('pagination::bootstrap-5') }}
-                        </div>
-
+                        @empty
+                            <div class="col-12 text-center text-muted py-5">
+                                Tidak ada data ditemukan
+                            </div>
+                        @endforelse
                     </div>
-                </div>
 
+
+                    {{-- PAGINATION --}}
+                    <div class="d-flex justify-content-end mt-3">
+                        {{ $data->links('pagination::bootstrap-5') }}
+                    </div>
+
+                </div>
             </div>
 
         </div>
+
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

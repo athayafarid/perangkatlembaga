@@ -1,6 +1,15 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\AnggotaLembaga;
+use App\Models\JabatanLembaga;
+
+use App\Models\LembagaDesa;
+use App\Models\PerangkatDesa;
+use App\Models\Rt;
+use App\Models\Rw;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -8,29 +17,18 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        return view("admin.dashboard");
-           $totalWarga = Warga::count();
+        return view('admin.dashboard', [
+            'warga'     => Warga::count(),
 
-        // Hitung berdasarkan gender
-        $totalLaki = Warga::where('jenis_kelamin', 'Laki-laki')->count();
-        $totalPerempuan = Warga::where('jenis_kelamin', 'Perempuan')->count();
-
-        // Hitung agama
-        $agama = Warga::selectRaw('agama, COUNT(*) as total')
-                        ->groupBy('agama')
-                        ->get();
-
-        // 5 data warga terbaru
-        $recent = Warga::orderBy('warga_id', 'DESC')->take(5)->get();
-
-        return view('admin.dashboard.index', [
-            'totalWarga'      => $totalWarga,
-            'totalLaki'       => $totalLaki,
-            'totalPerempuan'  => $totalPerempuan,
-            'agama'           => $agama,
-            'recent'          => $recent,
+            'rt'        => Rt::count(),
+            'rw'        => Rw::count(),
+            'perangkat' => PerangkatDesa::count(),
+            'lembaga'   => LembagaDesa::count(),
+            'jabatan'   => JabatanLembaga::count(),
+            'anggota'   => AnggotaLembaga::count(),
         ]);
     }
 

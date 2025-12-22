@@ -1,126 +1,72 @@
 @extends('layouts.admin.app')
 
 @section('content')
-    {{--  start main content  --}}
     <div class="pc-container">
         <div class="pc-content">
-            <!-- [ breadcrumb ] start -->
+
             <div class="page-header">
-                <div class="page-block">
-                    <div class="row align-items-center">
-                        <div class="col-md-12">
-                            <div class="page-header-title">
-                                <h5 class="m-b-10">{{ isset($jabatan) ? 'Edit Data Jabatan' : 'Tambah Data Jabatan' }}</h5>
-                            </div>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0)">Fitur Utama</a></li>
-                                <li class="breadcrumb-item">Data Jabatan Lembaga</li>
-                                <li class="breadcrumb-item" aria-current="page">
-                                    {{ isset($jabatan) ? 'Edit Data' : 'Tambah Data' }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <h5>Tambah Jabatan Lembaga</h5>
             </div>
-            <!-- [ breadcrumb ] end -->
-
-            <style>
-                .card-form {
-                    border: none;
-                    border-radius: 16px;
-                    box-shadow: 0 6px 18px rgba(13, 60, 97, 0.1);
-                    overflow: hidden;
-                }
-
-                .card-header-blue {
-                    background: linear-gradient(90deg, #0d6efd 0%, #2b8cff 100%);
-                    color: #fff;
-                    padding: 20px 24px;
-                    border: none;
-                }
-
-                .btn-primary {
-                    border-radius: 10px;
-                    padding: 8px 18px;
-                }
-
-                .form-control:focus,
-                .form-select:focus,
-                textarea:focus {
-                    border-color: #0d6efd;
-                    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, .25);
-                }
-            </style>
 
             <div class="container mt-5">
-                <div class="card card-form">
-                    <div class="card-header-blue d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">
-                            <i class="bi bi-briefcase"></i>
-                            {{ isset($jabatan) ? 'Edit Jabatan' : 'Tambah Jabatan' }}
-                        </h4>
-                        <a href="{{ route('jabatan_lembaga.index') }}" class="btn btn-light btn-sm">
-                            <i class="bi bi-arrow-left"></i> Kembali
-                        </a>
-                    </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
 
-                    <div class="card-body p-4">
-                        <form
-                            action="{{ isset($jabatan) ? route('jabatan_lembaga.update', $jabatan->id) : route('jabatan_lembaga.store') }}"
-                            method="POST">
-                            @csrf
-                            @if (isset($jabatan))
-                                @method('PUT')
-                            @endif
+                        <div class="form-card">
 
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label fw-semibold">Nama Jabatan</label>
-                                    <input type="text" name="nama_jabatan"
-                                        value="{{ old('nama_jabatan', $jabatan->nama_jabatan ?? '') }}" class="form-control"
-                                        required>
+                            <!-- HEADER -->
+                            <div class="form-card-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h4>Tambah Jabatan</h4>
+                                    <small>Isi data jabatan lembaga</small>
                                 </div>
+                                <a href="{{ route('jabatan_lembaga.index') }}" class="btn btn-light btn-sm">
+                                    Kembali
+                                </a>
+                            </div>
 
-                                <div class="col-md-6">
-                                    <div class="col-md-6">
-                                        <label class="form-label fw-semibold">Lembaga</label>
-                                        <input type="text" name="Lembaga"
-                                            value="{{ old('Lembaga', $jabatan->Lembaga ?? '') }}"
-                                            class="form-control" required>
+                            <!-- BODY -->
+                            <div class="form-card-body">
+                                <form action="{{ route('jabatan_lembaga.store') }}" method="POST">
+                                    @csrf
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Nama Jabatan</label>
+                                        <input type="text" name="nama_jabatan" class="form-control"
+                                            placeholder="Contoh: Sekretaris" required>
                                     </div>
-                                </div>
 
-                                <div class="col-md-12">
-                                    <label class="form-label fw-semibold">Deskripsi</label>
-                                    <textarea name="deskripsi" class="form-control" rows="3">{{ old('deskripsi', $jabatan->deskripsi ?? '') }}</textarea>
-                                </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Lembaga</label>
+                                        <select name="lembaga_id" class="form-select" required>
+                                            <option value="">-- Pilih Lembaga --</option>
+                                            @foreach ($lembaga as $l)
+                                                <option value="{{ $l->lembaga_id }}">
+                                                    {{ $l->nama_lembaga }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Level</label>
+                                        <input type="text" name="level" class="form-control"
+                                            placeholder="Contoh: 1 / Ketua / Pengurus">
+                                    </div>
+
+                                    <!-- FOOTER -->
+                                    <div class="form-card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="bi bi-save"></i> Simpan
+                                        </button>
+                                    </div>
+
+                                </form>
                             </div>
 
-                            <div class="mt-4 text-end">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Simpan
-                                </button>
-                            </div>
-                        </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
-
-            <!-- SweetAlert2 -->
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-            @if (session('success'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: '{{ session('success') }}',
-                        showConfirmButton: false,
-                        timer: 1800
-                    });
-                </script>
-            @endif
-        </div>
-    </div>
-    {{--  end main content  --}}
-@endsection
+        @endsection

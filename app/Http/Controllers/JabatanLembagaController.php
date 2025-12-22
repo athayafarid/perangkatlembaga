@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\JabatanLembaga;
@@ -22,7 +21,7 @@ class JabatanLembagaController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('nama_jabatan', 'LIKE', "%$search%")
-                  ->orWhere('level', 'LIKE', "%$search%");
+                    ->orWhere('level', 'LIKE', "%$search%");
             });
         }
 
@@ -33,19 +32,20 @@ class JabatanLembagaController extends Controller
 
     public function create()
     {
-        $lembaga = LembagaDesa::all();
-        return view('jabatan.create', compact('lembaga'));
+        return view('jabatan.create', [
+            'lembaga' => LembagaDesa::all(),
+        ]);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama_jabatan' => 'required|string|max:255',
-            'level'        => 'nullable|string|max:255',
             'lembaga_id'   => 'required|exists:lembaga_desa,lembaga_id',
+            'level'        => 'nullable|string|max:255',
         ]);
 
-        JabatanLembaga::create($request->all());
+        JabatanLembaga::create($data);
 
         return redirect()->route('jabatan_lembaga.index')
             ->with('success', 'Jabatan berhasil ditambahkan!');
@@ -53,23 +53,23 @@ class JabatanLembagaController extends Controller
 
     public function edit($id)
     {
-        $jabatan = JabatanLembaga::findOrFail($id);
-        $lembaga = LembagaDesa::all();
-
-        return view('jabatan.edit', compact('jabatan','lembaga'));
+        return view('jabatan.edit', [
+            'jabatan' => JabatanLembaga::findOrFail($id),
+            'lembaga' => LembagaDesa::all(),
+        ]);
     }
 
     public function update(Request $request, $id)
     {
         $jabatan = JabatanLembaga::findOrFail($id);
 
-        $request->validate([
+        $data = $request->validate([
             'nama_jabatan' => 'required|string|max:255',
-            'level'        => 'nullable|string|max:255',
             'lembaga_id'   => 'required|exists:lembaga_desa,lembaga_id',
+            'level'        => 'nullable|string|max:255',
         ]);
 
-        $jabatan->update($request->all());
+        $jabatan->update($data);
 
         return redirect()->route('jabatan_lembaga.index')
             ->with('success', 'Data jabatan berhasil diperbarui!');

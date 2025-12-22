@@ -14,8 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         // Seeder default Laravel
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'farid',
+            'email' => 'farid@gmail.com',
+            'password'=>'farid123'
         ]);
 
         // Tambahkan pemanggilan seeder kamu DI BAWAH

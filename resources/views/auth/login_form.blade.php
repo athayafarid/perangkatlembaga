@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | PlusAdmin</title>
+    <title>Admin Login | Perangkat Lembaga</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,8 +25,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
-
         }
 
         .login-container {
@@ -81,7 +79,6 @@
             padding: 12px;
             font-weight: 600;
             width: 100%;
-            transition: 0.3s;
         }
 
         .btn-login:hover {
@@ -98,56 +95,61 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            object-fit: cover;
             margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
-        .right-info h2 {
-            font-weight: 700;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .right-info p {
-            font-size: 0.95rem;
-            line-height: 1.6;
         }
 
         @media (max-width: 992px) {
-            body {
-                justify-content: center;
-                padding: 0;
-            }
-
             .login-container {
                 flex-direction: column-reverse;
-                background: rgba(255, 255, 255, 0.95);
-                box-shadow: none;
                 padding: 30px;
             }
-
-            .right-info {
-                color: #0048ff;
-            }
         }
+
+        /* ===== SIDEBAR HEADER ===== */
+.sidebar-header {
+    padding: 20px 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 12px;
+}
+
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* LOGO */
+.brand-logo img {
+    max-width: 250px;        /* KUNCI: jangan besar */
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+/* TEKS DI BAWAH LOGO */
+.brand-text {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #aab4ff;
+    text-align: center;
+}
+
     </style>
 </head>
 
 <body>
 
     <div class="login-container">
-        <!-- Bagian Kiri: Form Login -->
+
+        <!-- FORM LOGIN -->
         <div class="login-box">
             <h2 class="text-center mb-1">Welcome to</h2>
-            <h1 class="text-center mb-3" style="color: #0048ff; font-weight: 700;">Bina Desa</h1>
+            <h1 class="text-center mb-3" style="color:#0048ff;font-weight:700;">Perangkat Lembaga</h1>
             <p class="login-title">Admin Login</p>
 
             @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Login Gagal:</strong> {{ $errors->first() }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
                 <script>
                     Swal.fire({
                         icon: 'error',
@@ -158,41 +160,50 @@
                 </script>
             @endif
 
-            <form action="{{ url('/auth/login') }}" method="POST" role="form" novalidate>
+            <form action="{{ url('/auth/login') }}" method="POST">
                 @csrf
+
+                <!-- EMAIL -->
                 <div class="mb-3">
-                    <label for="username" class="form-label fw-semibold">Username</label>
-                    <input id="username" name="username" type="text"
-                        class="form-control @error('username') is-invalid @enderror" placeholder="Masukkan username"
-                        value="{{ old('username') }}" required autofocus>
-                    @error('username')
+                    <label class="form-label fw-semibold">Email</label>
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                        placeholder="Masukkan email" value="{{ old('email') }}" required autofocus>
+                    @error('email')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
+                <!-- PASSWORD -->
                 <div class="mb-3">
-                    <label for="password" class="form-label fw-semibold">Password</label>
+                    <label class="form-label fw-semibold">Password</label>
                     <div class="input-group">
                         <input id="password" name="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" placeholder="Masukkan password"
                             required>
-                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">Tampilkan</button>
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            Tampilkan
+                        </button>
                     </div>
                     @error('password')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                            {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="remember">Ingat saya</label>
-                    </div>
-                    <a href="{{ url('/auth/forgot') }}" class="text-decoration-none small">Lupa password?</a>
+                <button type="submit" class="btn btn-login">Login</button>
+
+                <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                    <div></div>
+                    <a href="{{ url('/forgot-password') }}" class="text-decoration-none"
+                        style="font-size:13px; color:#0d6efd;">
+                        Lupa password?
+                    </a>
                 </div>
 
-                <button type="submit" class="btn btn-login">Login</button>
+
+                <div class="text-center mt-3">
+                    <span class="text-muted">Belum punya akun?</span>
+                    <a href="{{ route('register') }}" class="fw-semibold">Buat akun terlebih dahulu</a>
+                </div>
             </form>
 
             <div class="text-center mt-4">
@@ -200,40 +211,27 @@
             </div>
         </div>
 
-        <!-- Bagian Kanan: Logo & Deskripsi -->
-        <div class="right-info">
-            <img src="https://marketplace.canva.com/EAGKWMALAAQ/2/0/1600w/canva-biru-gelap-putih-lingkaran-lembaga-pendidikan-logo-RsOAXGYnMCs.jpg"
-                alt="Logo Bina Desa">
-            <h2>Bina Desa</h2>
-            <p>
-                unsur pelaksana dalam struktur organisasi lembaga desa yang bertugas membantu pelaksanaan program,
-                kegiatan, dan pelayanan kepada masyarakat.
-                Mereka berperan dalam mendukung fungsi lembaga sesuai bidangnya masing-masing, seperti pemberdayaan
-                masyarakat, administrasi, keamanan, dan sosial kemasyarakatan, agar roda pemerintahan dan pembangunan
-                desa berjalan efektif dan tertata.
-            </p>
+        <!-- INFO -->
+        {{-- LOGO SIDEBAR --}}
+        <div class="m-header sidebar-header">
+            <a href="{{ route('dashboard') }}" class="brand-logo">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
+                <span class="brand-text">PERANGKAT</span>
+            </a>
         </div>
+
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        (function() {
-            const toggle = document.getElementById('togglePassword');
-            const pwd = document.getElementById('password');
-            if (!toggle || !pwd) return;
-
-            toggle.addEventListener('click', function() {
-                const showing = pwd.type === 'text';
-                pwd.type = showing ? 'password' : 'text';
-                toggle.textContent = showing ? 'Tampilkan' : 'Sembunyikan';
-            });
-        })();
+        const toggle = document.getElementById('togglePassword');
+        const pwd = document.getElementById('password');
+        toggle.addEventListener('click', () => {
+            pwd.type = pwd.type === 'password' ? 'text' : 'password';
+            toggle.textContent = pwd.type === 'password' ? 'Tampilkan' : 'Sembunyikan';
+        });
     </script>
 
 </body>
-
-<a href="https://api.whatsapp.com/send/?phone=62895396200200&text=Halo+Admin+Honda+Cengkareng+%EF%BF%BD%0ASaya+perlu+bantuan+terkait+pemilihan+layanan+yang+tepat.+Boleh+dibantu%3F&type=phone_number&app_absent=0"
-style="bottom: 10%" class="btn btn-secondary btn-lg-square rounded-circle back-to-top" >
-<img src="https://cdn-icons-png.flaticon.com/128/3670/3670051.png" style="width:100%; height:100%;" alt=""></a>
 
 </html>

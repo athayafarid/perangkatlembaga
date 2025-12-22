@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -16,44 +20,27 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // Validasi input
-        $request->validate([
-            'username' => 'required',
-            'password' => [
-                'required',
-                'min:3',
-                function ($attribute, $value, $fail) {
-                    if (!preg_match('/[A-Z]/', $value)) {
-                        $fail('Password harus mengandung minimal satu huruf kapital.');
-                    }
-                },
-            ],
-        ], [
-            'username.required' => 'Username wajib diisi.',
-            'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal 3 karakter.',
-        ]);
-
-        $username = $request->input('username');
-        $password = $request->input('password');
-
-        // RULE LOGIN: username harus sama dengan password
-        if ($username === $password) {
-
-            // Simpan session login
-            $request->session()->put('isLoggedIn', true);
-            $request->session()->put('username', $username);
-
-            // TAMPILKAN success.blade DENGAN PESAN
-            return view('auth.success', [
-                'message' => "Selamat datang, $username! Login berhasil."
+         $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|min:3',
+            ], [
+                'email.required' => 'Email tidak boleh kosong',
+                'email.email' => 'Format email tidak valid',
+                'password.required' => 'Password tidak boleh kosong',
+                'password.min' => 'Password minimal 3 karakter',
             ]);
+
+            // Cek apakah email ada di tabel user
+            $user = User::where('email', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+                $request->session()->regenerate();
+                return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            }
+
+            return back()->with('error', 'Email atau password salah')->withInput();
         }
-
-        return back()
-            ->withErrors(['login' => 'Username dan password harus sama untuk login.'])
-            ->withInput();
-    }
-
     // POST /logout → proses logout
     public function logout(Request $request)
     {
