@@ -1,16 +1,29 @@
-<footer class="pc-footer">
-        <div class="footer-wrapper container-fluid">
-            <div class="row">
-                <div class="col-sm my-1">
-                    <p class="m-0">Mantis &#9829; crafted by Team <a
-                            href="https://themeforest.net/user/codedthemes" target="_blank">Codedthemes</a>
-                        Distributed by <a href="https://themewagon.com/">ThemeWagon</a>.</p>
-                </div>
-                <div class="col-auto my-1">
-                    <ul class="list-inline footer-link mb-0">
-                        <li class="list-inline-item"><a href="../index.html">Home</a></li>
-                    </ul>
+<footer class="pc-footer custom-footer">
+    <div class="footer-wrapper container-fluid">
+        <div class="row align-items-center">
+
+            {{-- Kiri: Identitas Sistem --}}
+            <div class="col-md-6 my-1">
+                <div class="footer-brand">
+                    <img src="{{ asset('assets/images/logo.png') }}"
+                         alt="Logo"
+                         class="footer-logo">
+                    <div class="footer-text">
+                        <strong>Sistem Perangkat & Lembaga Desa</strong><br>
+                        <small>
+                            Dikembangkan oleh <b>Muhammad Farid Athaya</b> · Sistem Informasi
+                        </small>
+                    </div>
                 </div>
             </div>
+
+            {{-- Kanan: Copyright --}}
+            <div class="col-md-6 my-1 text-md-end text-start">
+                <small class="footer-copy">
+                    © {{ date('Y') }} Perangkat dan Lembaga Desa.
+                </small>
+            </div>
+
         </div>
-    </footer>
+    </div>
+</footer>

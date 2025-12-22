@@ -3,16 +3,14 @@
 
         {{-- LOGO --}}
         {{-- LOGO SIDEBAR --}}
-<div class="pc-sidebar-header text-center py-4">
-    <img src="{{ asset('assets/images/logo.png') }}"
-         alt="Logo Desa"
-         class="img-fluid sidebar-logo mb-2">
+        <div class="pc-sidebar-header text-center py-4">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Desa" class="img-fluid sidebar-logo mb-2">
 
-    <h6 class="text-white fw-bold mb-0">PERANGKAT DESA</h6>
-</div>
+            <h6 class="text-white fw-bold mb-0">PERANGKAT DESA</h6>
+        </div>
 
 
-        <div class="navbar-content d-flex flex-column" style="height:100%;">
+        <div class="navbar-content d-flex flex-column">
 
             {{-- MENU UTAMA --}}
             <ul class="pc-navbar flex-grow-1">
@@ -71,14 +69,6 @@
                     </a>
                 </li>
 
-                {{-- KELUARGA --}}
-                {{-- <li class="pc-item {{ request()->routeIs('keluarga.*') ? 'active' : '' }}">
-                    <a href="{{ route('keluarga.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-home"></i></span>
-                        <span class="pc-mtext">Data Keluarga</span>
-                    </a>
-                </li> --}}
-
                 {{-- WARGA --}}
                 <li class="pc-item {{ request()->routeIs('warga.*') ? 'active' : '' }}">
                     <a href="{{ route('warga.index') }}" class="pc-link">
@@ -94,11 +84,18 @@
                         <span class="pc-mtext">Multi Uploads</span>
                     </a>
                 </li>
+
+                {{-- IDENTITAS PENGEMBANG --}}
+                <li class="pc-item {{ request()->routeIs('pengembang') ? 'active' : '' }}">
+                    <a href="{{ route('pengembang') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-user-star"></i></span>
+                        <span class="pc-mtext">Identitas Pengembang</span>
+                    </a>
+                </li>
+
             </ul>
 
-            {{-- LOGOUT --}}
-
-
         </div>
+
     </div>
 </nav>

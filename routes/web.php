@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Login
+
+Route::get('/pengembang', function () {
+    return view('admin.pengembang');
+})->middleware('auth')->name('pengembang');
+
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::get('/auth', [AuthController::class, 'index'])->name('auth.index');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
