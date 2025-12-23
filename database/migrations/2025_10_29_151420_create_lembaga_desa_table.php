@@ -11,9 +11,9 @@ return new class extends Migration
        Schema::create('lembaga_desa', function (Blueprint $table) {
     $table->id('lembaga_id');
     $table->string('nama_lembaga');
-    $table->text('deskripsi')->nullable();
+    $table->text('keterangan')->nullable();
     $table->string('kontak')->nullable();
-    $table->string('logo')->nullable();
+    $table->string('logo')->nullable(); // FOTO / LOGO
     $table->timestamps();
 });
 

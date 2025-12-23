@@ -1,57 +1,71 @@
 @extends('layouts.admin.app')
-@section('title', isset($lembaga) ? 'Edit Lembaga' : 'Tambah Lembaga')
+@section('title', 'Edit Lembaga Desa')
 
 @section('content')
-<div class="container mt-5">
-    <div class="card border-0 shadow">
-        <div class="card-header text-white" style="background:#6f42c1;">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">
-                    <i class="bi bi-building"></i>
-                    {{ isset($lembaga) ? 'Edit Lembaga' : 'Tambah Lembaga' }}
-                </h4>
+    <div class="pc-container">
+        <div class="pc-content">
 
-                {{-- ⬇️ FIX --}}
-                <a href="{{ route('lembaga_desa.index') }}" class="btn btn-light btn-sm">
-                    <i class="bi bi-arrow-left"></i> Kembali
-                </a>
+            <div class="container mt-4" style="max-width:900px;">
+                <div class="card card-form">
+
+                    {{-- HEADER --}}
+                    <div class="card-header-green d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-pencil-square"></i> Edit Lembaga Desa
+                        </h4>
+                        <a href="{{ route('lembaga_desa.index') }}" class="btn btn-light btn-sm">
+                            <i class="bi bi-arrow-left"></i> Kembali
+                        </a>
+                    </div>
+
+                    {{-- BODY --}}
+                    <div class="card-body p-4">
+                        <form method="POST"
+                            action="{{ route('lembaga_desa.update', ['lembaga_desa' => $lembaga->lembaga_id]) }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Nama Lembaga</label>
+                                    <input type="text" name="nama_lembaga" class="form-control"
+                                        value="{{ old('nama_lembaga', $lembaga->nama_lembaga) }}" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Logo</label>
+                                    <input type="file" name="logo" class="form-control">
+
+                                    @if ($lembaga->logo)
+                                        <small class="text-muted d-block mt-1">
+                                            Logo saat ini:
+                                        </small>
+                                        <img src="{{ asset('storage/' . $lembaga->logo) }}" width="60"
+                                            class="rounded mt-1">
+                                    @endif
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="form-label fw-semibold">Deskripsi</label>
+                                    <textarea name="deskripsi" rows="3" class="form-control">{{ old('deskripsi', $lembaga->deskripsi) }}</textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-4 text-end">
+                                <button type="submit" class="btn btn-green-custom text-white">
+                                    <i class="bi bi-save"></i> Update
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <form
-                action="{{ isset($lembaga)
-                    ? route('lembaga_desa.update', $lembaga->id)
-                    : route('lembaga_desa.store') }}"
-                method="POST">
-
-                @csrf
-                @isset($lembaga)
-                    @method('PUT')
-                @endisset
-
-                <div class="mb-3">
-                    <label class="form-label">Nama Lembaga</label>
-                    <input type="text"
-                           name="nama_lembaga"
-                           value="{{ old('nama_lembaga', $lembaga->nama_lembaga ?? '') }}"
-                           class="form-control"
-                           required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Keterangan</label>
-                    <textarea name="keterangan"
-                              class="form-control">{{ old('keterangan', $lembaga->keterangan ?? '') }}</textarea>
-                </div>
-
-                <div class="text-end">
-                    <button type="submit" class="btn text-white" style="background:#6f42c1;">
-                        <i class="bi bi-save"></i> Simpan
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
 @endsection

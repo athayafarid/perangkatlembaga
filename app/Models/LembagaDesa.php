@@ -9,20 +9,16 @@ class LembagaDesa extends Model
 {
     use HasFactory;
 
-    protected $table      = 'lembaga_desa';
+    protected $table = 'lembaga_desa';
     protected $primaryKey = 'lembaga_id';
 
     protected $fillable = [
         'nama_lembaga',
         'deskripsi',
-        'kontak',
         'logo',
     ];
 
-    public function getRouteKeyName()
-    {
-        return 'lembaga_id';
-    }
+   
 
     public function scopeFilter(Builder $query, $request, array $columns)
     {

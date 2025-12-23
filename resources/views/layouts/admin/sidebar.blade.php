@@ -29,14 +29,6 @@
                     <i class="ti ti-apps"></i>
                 </li>
 
-                {{-- RT --}}
-                <li class="pc-item {{ request()->routeIs('rt.*') ? 'active' : '' }}">
-                    <a href="{{ route('rt.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-map-pin"></i></span>
-                        <span class="pc-mtext">Data RT</span>
-                    </a>
-                </li>
-
                 {{-- RW --}}
                 <li class="pc-item {{ request()->routeIs('rw.*') ? 'active' : '' }}">
                     <a href="{{ route('rw.index') }}" class="pc-link">
@@ -45,11 +37,20 @@
                     </a>
                 </li>
 
+
+                {{-- RT --}}
+                <li class="pc-item {{ request()->routeIs('rt.*') ? 'active' : '' }}">
+                    <a href="{{ route('rt.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-map-pin"></i></span>
+                        <span class="pc-mtext">Data RT</span>
+                    </a>
+                </li>
+
                 {{-- PERANGKAT --}}
                 <li class="pc-item {{ request()->routeIs('perangkat_desa.*') ? 'active' : '' }}">
                     <a href="{{ route('perangkat_desa.index') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-users"></i></span>
-                        <span class="pc-mtext">Perangkat</span>
+                        <span class="pc-mtext">Perangkat Desa</span>
                     </a>
                 </li>
 
@@ -57,7 +58,7 @@
                 <li class="pc-item {{ request()->routeIs('lembaga_desa.*') ? 'active' : '' }}">
                     <a href="{{ route('lembaga_desa.index') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-building"></i></span>
-                        <span class="pc-mtext">Lembaga</span>
+                        <span class="pc-mtext">Lembaga Desa</span>
                     </a>
                 </li>
 
@@ -65,7 +66,7 @@
                 <li class="pc-item {{ request()->routeIs('jabatan_lembaga.*') ? 'active' : '' }}">
                     <a href="{{ route('jabatan_lembaga.index') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-id-badge"></i></span>
-                        <span class="pc-mtext">Jabatan</span>
+                        <span class="pc-mtext">Jabatan Lembaga</span>
                     </a>
                 </li>
 
@@ -77,7 +78,14 @@
                     </a>
                 </li>
 
-                {{-- MULTI UPLOAD --}}
+                <li class="pc-item {{ request()->routeIs('anggota_lembaga.*') ? 'active' : '' }}">
+                    <a href="{{ route('anggota_lembaga.index') }}" class="pc-link">
+                        <span class="pc-micon"><i class="ti ti-building"></i></span>
+                        <span class="pc-mtext">Anggota Lembaga</span>
+                    </a>
+                </li>
+
+                        {{-- MULTI UPLOAD --}}
                 <li class="pc-item {{ request()->routeIs('uploads*') ? 'active' : '' }}">
                     <a href="{{ route('uploads') }}" class="pc-link">
                         <span class="pc-micon"><i class="ti ti-upload"></i></span>

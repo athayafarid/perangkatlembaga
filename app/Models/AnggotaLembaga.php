@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AnggotaLembaga extends Model
 {
-    use HasFactory;
-
     protected $table = 'anggota_lembaga';
     protected $primaryKey = 'anggota_id';
 
@@ -18,27 +16,30 @@ class AnggotaLembaga extends Model
         'warga_id',
         'jabatan_id',
         'tgl_mulai',
-        'tgl_selesai'
+        'tgl_selesai',
+        'keterangan'
     ];
 
-    /* ===========================
-       RELASI
-    ============================*/
+    public function getRouteKeyName()
+    {
+        return 'anggota_id';
+    }
 
     public function lembaga()
     {
-        return $this->belongsTo(LembagaDesa::class, 'lembaga_id', 'lembaga_id');
+        return $this->belongsTo(LembagaDesa::class, 'lembaga_id');
     }
 
     public function warga()
     {
-        return $this->belongsTo(Warga::class, 'warga_id', 'warga_id');
+        return $this->belongsTo(Warga::class, 'warga_id');
     }
 
     public function jabatan()
     {
-        return $this->belongsTo(JabatanLembaga::class, 'jabatan_id', 'jabatan_id');
+        return $this->belongsTo(JabatanLembaga::class, 'jabatan_id');
     }
+
 
     /* ===========================
        FILTER (dropdown)

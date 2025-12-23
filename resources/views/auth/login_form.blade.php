@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Perangkat Lembaga</title>
+    <title> Login | Perangkat Lembaga</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -106,36 +106,36 @@
         }
 
         /* ===== SIDEBAR HEADER ===== */
-.sidebar-header {
-    padding: 20px 12px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 12px;
-}
+        .sidebar-header {
+            padding: 20px 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 12px;
+        }
 
-.brand-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-}
+        .brand-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
 
-/* LOGO */
-.brand-logo img {
-    max-width: 250px;        /* KUNCI: jangan besar */
-    height: auto;
-    object-fit: contain;
-    margin-bottom: 8px;
-}
+        /* LOGO */
+        .brand-logo img {
+            max-width: 250px;
+            /* KUNCI: jangan besar */
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
 
-/* TEKS DI BAWAH LOGO */
-.brand-text {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: #aab4ff;
-    text-align: center;
-}
-
+        /* TEKS DI BAWAH LOGO */
+        .brand-text {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #aab4ff;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -147,7 +147,7 @@
         <div class="login-box">
             <h2 class="text-center mb-1">Welcome to</h2>
             <h1 class="text-center mb-3" style="color:#0048ff;font-weight:700;">Perangkat Lembaga</h1>
-            <p class="login-title">Admin Login</p>
+            <p class="login-title">Silahkan Login</p>
 
             @if ($errors->any())
                 <script>
@@ -213,13 +213,22 @@
 
         <!-- INFO -->
         {{-- LOGO SIDEBAR --}}
-        <div class="m-header sidebar-header">
-            <a href="{{ route('dashboard') }}" class="brand-logo">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
-                <span class="brand-text">PERANGKAT</span>
-            </a>
-        </div>
+        <!-- INFO / RIGHT SECTION -->
+        <div class="right-info text-center">
 
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Perangkat Lembaga" class="info-logo">
+
+            <h4 class="info-title">
+                Sistem Informasi Perangkat dan Lembaga Desa
+            </h4>
+
+            <p class="info-desc">
+                Platform digital untuk mengelola data perangkat desa,
+                lembaga kemasyarakatan, serta struktur organisasi secara
+                terintegrasi, akurat, dan transparan.
+            </p>
+
+        </div>
 
     </div>
 

@@ -8,18 +8,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PerangkatDesa extends Model
 {
-    use HasFactory;
-
-    protected $table = 'perangkat_desa';
+     protected $table = 'perangkat_desa';
     protected $primaryKey = 'perangkat_id';
 
     protected $fillable = [
         'warga_id',
         'jabatan',
-        'nip',
-        'kontak',
         'periode_mulai',
         'periode_selesai',
+        'keterangan',
         'foto'
     ];
 

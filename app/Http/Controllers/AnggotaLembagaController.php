@@ -1,18 +1,25 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\AnggotaLembaga;
 use App\Models\JabatanLembaga;
 use App\Models\LembagaDesa;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 
 class AnggotaLembagaController extends Controller
 {
     public function index(Request $request)
     {
-        $data = AnggotaLembaga::with(['lembaga', 'jabatan'])
+        $data = AnggotaLembaga::with(['lembaga', 'jabatan', 'warga'])
+            ->search($request, [
+                'warga.nama',
+                'lembaga.nama_lembaga',
+                'jabatan.nama_jabatan',
+            ])
             ->latest()
-            ->paginate(10)
+            ->paginate(9)
             ->withQueryString();
 
         return view('anggota.index', compact('data'));
@@ -20,51 +27,60 @@ class AnggotaLembagaController extends Controller
 
     public function create()
     {
-        $lembaga = LembagaDesa::all();
-        $jabatan = JabatanLembaga::all();
-        return view('anggota.create', compact('lembaga', 'jabatan'));
+        $lembaga = LembagaDesa::orderBy('nama_lembaga')->get();
+        $jabatan = JabatanLembaga::orderBy('nama_jabatan')->get();
+        $warga   = Warga::orderBy('nama')->get();
+
+        return view('anggota.create', compact('lembaga', 'jabatan', 'warga'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama'       => 'required|string|max:255',
-            'jabatan_id' => 'required|exists:jabatan_lembagas,id',
-            'lembaga_id' => 'required|exists:lembaga_desas,id',
-            'no_telp'    => 'nullable|string|max:15',
-            'email'      => 'nullable|email',
-            'alamat'     => 'nullable|string',
+        $data = $request->validate([
+            'warga_id'    => 'required',
+            'lembaga_id'  => 'required',
+            'jabatan_id'  => 'required',
+            'tgl_mulai'   => 'nullable',
+            'tgl_selesai' => 'nullable',
+            'keterangan'  => 'nullable',
         ]);
 
-        AnggotaLembaga::create($request->all());
-        return redirect()->route('anggota.index')->with('success', 'Anggota berhasil ditambahkan!');
+        AnggotaLembaga::create($data);
+
+        return redirect()->route('anggota_lembaga.index')
+            ->with('success', 'Anggota lembaga ditambahkan');
     }
 
-    public function edit(AnggotaLembaga $anggota)
+    public function edit(AnggotaLembaga $anggota_lembaga)
     {
-        $lembaga = LembagaDesa::all();
-        $jabatan = JabatanLembaga::all();
-        return view('anggota.edit', compact('anggota', 'lembaga', 'jabatan'));
+        return view('anggota.edit', [
+            'anggota' => $anggota_lembaga,
+            'warga'   => Warga::all(),
+            'lembaga' => LembagaDesa::all(),
+            'jabatan' => JabatanLembaga::all(),
+        ]);
     }
 
-    public function update(Request $request, AnggotaLembaga $anggota)
+    public function update(Request $request, AnggotaLembaga $anggota_lembaga)
     {
-        $request->validate([
-            'nama'       => 'required|string|max:255',
-            'jabatan_id' => 'required|exists:jabatan_lembagas,id',
-            'lembaga_id' => 'required|exists:lembaga_desas,id',
-            'no_telp'    => 'nullable|string|max:15',
-            'email'      => 'nullable|email',
-            'alamat'     => 'nullable|string',
+        $data = $request->validate([
+            'warga_id'    => 'required',
+            'lembaga_id'  => 'required',
+            'jabatan_id'  => 'required',
+            'tgl_mulai'   => 'nullable',
+            'tgl_selesai' => 'nullable',
+            'keterangan'  => 'nullable',
         ]);
 
-        $anggota->update($request->all());
-        return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil diperbarui!');
+        $anggota_lembaga->update($data);
+
+        return redirect()->route('anggota_lembaga.index')
+            ->with('success', 'Data diperbarui');
     }
 
-    public function destroy(AnggotaLembaga $anggota)
+    public function destroy(AnggotaLembaga $anggota_lembaga)
     {
-        $anggota->delete();
-        return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil dihapus!');
+        $anggota_lembaga->delete();
+        return back()->with('success', 'Data dihapus');
     }
 }

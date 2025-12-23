@@ -90,15 +90,15 @@
 
                             {{-- Sosial Media --}}
                             <div class="social-links-img mt-4">
-                                <a href="https://linkedin.com" target="_blank" data-title="LinkedIn">
+                                <a href="https://www.linkedin.com/in/farid-athaya-a0081339b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" data-title="LinkedIn">
                                     <img src="{{ asset('assets/images/social/linkedin.png') }}" alt="LinkedIn">
                                 </a>
 
-                                <a href="https://github.com" target="_blank" data-title="GitHub">
+                                <a href="https://github.com/athayafarid/perangkatlembaga" target="_blank" data-title="GitHub">
                                     <img src="{{ asset('assets/images/social/github.png') }}" alt="GitHub">
                                 </a>
 
-                                <a href="https://instagram.com" target="_blank" data-title="Instagram">
+                                <a href="https://www.instagram.com/faridathayaa?igsh=czI1ZmxpbmNkb3Yy" target="_blank" data-title="Instagram">
                                     <img src="{{ asset('assets/images/social/instagram.png') }}" alt="Instagram">
                                 </a>
 

@@ -572,12 +572,15 @@
          }
 
          /* INPUT */
+         /* INPUT DEFAULT */
          .form-control,
          .form-select {
+             border: 1.5px solid #cbd5e1;
+             /* lebih tegas */
              border-radius: 12px;
-             border: 1px solid #e5e7eb;
              padding: 10px 14px;
              font-size: 14px;
+             background-color: #ffffff;
          }
 
          .form-control:focus,
@@ -1129,7 +1132,7 @@
          }
 
          .sidebar-logo {
-             max-width: 140px;
+             max-width: 110px;
              /* 🔑 KUNCI UTAMA */
              width: 100%;
              height: auto;
@@ -1150,5 +1153,66 @@
 
          .pc-sidebar.collapsed .pc-sidebar-header h6 {
              display: none;
+         }
+
+         .rw-card {
+             background: #fff;
+             border-radius: 16px;
+             box-shadow: 0 6px 18px rgba(13, 60, 97, .12);
+             padding: 16px;
+         }
+
+         .rw-card-header {
+             display: flex;
+             justify-content: space-between;
+             align-items: start;
+             margin-bottom: 10px;
+         }
+
+         .rw-title {
+             font-weight: 600;
+             font-size: 14px;
+         }
+
+         .rw-desc {
+             font-size: 13px;
+             color: #6c757d;
+             line-height: 1.5;
+         }
+
+         .btn-icon {
+             padding: 6px 8px;
+             border-radius: 8px;
+         }
+
+         .card-form {
+             border: none;
+             border-radius: 16px;
+             box-shadow: 0 6px 18px rgba(13, 60, 97, 0.12);
+             overflow: hidden;
+         }
+
+         .card-header-green {
+             background: linear-gradient(90deg, #198754 0%, #28b76b 100%);
+             padding: 20px 24px;
+             color: #fff;
+             border: none;
+         }
+
+         .btn-green-custom {
+             background: #198754;
+             border-radius: 10px;
+             padding: 8px 18px;
+             border: none;
+         }
+
+         .form-control {
+             border: 1.5px solid #d0d7e2;
+             border-radius: 10px;
+         }
+
+         .form-control:focus {
+             border-color: #198754;
+             box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, .25);
          }
  </style>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\PerangkatDesa;
@@ -11,8 +12,14 @@ class PerangkatDesaController extends Controller
     public function index(Request $request)
     {
         $data = PerangkatDesa::with('warga')
+            ->when($request->q, function ($query) use ($request) {
+                $query->where('jabatan', 'like', '%' . $request->q . '%')
+                      ->orWhereHas('warga', function ($q) use ($request) {
+                          $q->where('nama', 'like', '%' . $request->q . '%');
+                      });
+            })
             ->latest()
-            ->paginate(10)
+            ->paginate(9)
             ->withQueryString();
 
         return view('perangkat.index', compact('data'));
@@ -20,62 +27,79 @@ class PerangkatDesaController extends Controller
 
     public function create()
     {
-        $warga = Warga::all();
+        $warga = Warga::orderBy('nama')->get();
         return view('perangkat.create', compact('warga'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'jabatan' => 'required',
-            'foto'    => 'image|mimes:jpg,jpeg,png|max:2048',
+        $validated = $request->validate([
+            'warga_id' => 'nullable',
+            'jabatan' => 'required|string|max:100',
+            'periode_mulai' => 'nullable|string|max:50',
+            'periode_selesai' => 'nullable|string|max:50',
+            'keterangan' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $input = $request->all();
-
         if ($request->hasFile('foto')) {
-            $input['foto'] = $request->file('foto')->store('foto_perangkat', 'public');
+            $validated['foto'] = $request->file('foto')->store('foto_perangkat', 'public');
         }
 
-        PerangkatDesa::create($input);
+        PerangkatDesa::create($validated);
 
-        return redirect()->route('perangkat.index')->with('success', 'Perangkat desa berhasil ditambahkan!');
+        return redirect()
+            ->route('perangkat_desa.index')
+            ->with('success', 'Perangkat desa berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $data  = PerangkatDesa::findOrFail($id);
-        $warga = Warga::all();
+        $data = PerangkatDesa::findOrFail($id);
+        $warga = Warga::orderBy('nama')->get();
+
         return view('perangkat.edit', compact('data', 'warga'));
     }
 
     public function update(Request $request, $id)
     {
-        $data  = PerangkatDesa::findOrFail($id);
-        $input = $request->all();
+        $data = PerangkatDesa::findOrFail($id);
+
+        $validated = $request->validate([
+            'warga_id' => 'nullable',
+            'jabatan' => 'required|string|max:100',
+            'periode_mulai' => 'nullable|string|max:50',
+            'periode_selesai' => 'nullable|string|max:50',
+            'keterangan' => 'nullable|string',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
         if ($request->hasFile('foto')) {
             if ($data->foto) {
                 Storage::disk('public')->delete($data->foto);
             }
-
-            $input['foto'] = $request->file('foto')->store('foto_perangkat', 'public');
+            $validated['foto'] = $request->file('foto')->store('foto_perangkat', 'public');
         }
 
-        $data->update($input);
+        $data->update($validated);
 
-        return redirect()->route('perangkat.index')->with('success', 'Data perangkat berhasil diperbarui!');
+        return redirect()
+            ->route('perangkat_desa.index')
+            ->with('success', 'Data perangkat berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $data = PerangkatDesa::findOrFail($id);
+
         if ($data->foto) {
             Storage::disk('public')->delete($data->foto);
         }
 
         $data->delete();
 
-        return redirect()->route('perangkat.index')->with('success', 'Perangkat desa berhasil dihapus!');
+        return redirect()
+            ->route('perangkat_desa.index')
+            ->with('success', 'Perangkat desa berhasil dihapus');
     }
 }

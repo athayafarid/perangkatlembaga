@@ -10,12 +10,13 @@ return new class extends Migration
     {
         Schema::create('perangkat_desa', function (Blueprint $table) {
     $table->id('perangkat_id');
-    $table->unsignedBigInteger('warga_id')->nullable(); // tanpa foreign
+    $table->unsignedBigInteger('warga_id')->nullable();
     $table->string('jabatan');
     $table->string('nip')->nullable();
     $table->string('kontak')->nullable();
     $table->string('periode_mulai')->nullable();
     $table->string('periode_selesai')->nullable();
+    $table->text('keterangan')->nullable(); // ✅ TAMBAHAN
     $table->string('foto')->nullable();
     $table->timestamps();
 });
