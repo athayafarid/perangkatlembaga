@@ -1215,4 +1215,167 @@
              border-color: #198754;
              box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, .25);
          }
+
+         .section-header h4 {
+             font-weight: 700;
+             margin-bottom: 4px;
+         }
+
+         .section-header small {
+             color: #6c757d;
+         }
+
+         .stat-card {
+             background: #ffffff;
+             border-radius: 18px;
+             padding: 20px;
+             display: flex;
+             align-items: center;
+             gap: 16px;
+             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+             transition: all .25s ease;
+             position: relative;
+             overflow: hidden;
+         }
+
+         .stat-card:hover {
+             transform: translateY(-6px);
+             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+         }
+
+         .stat-icon {
+             width: 56px;
+             height: 56px;
+             border-radius: 14px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             font-size: 26px;
+             color: #fff;
+         }
+
+         .stat-content h2 {
+             margin: 0;
+             font-weight: 700;
+         }
+
+         .stat-title {
+             font-size: 14px;
+             color: #6c757d;
+         }
+
+         .stat-meta {
+             font-size: 12px;
+             color: #adb5bd;
+         }
+
+         /* Variasi warna */
+         .stat-primary .stat-icon {
+             background: linear-gradient(135deg, #4facfe, #00f2fe);
+         }
+
+         .stat-warning .stat-icon {
+             background: linear-gradient(135deg, #f7971e, #ffd200);
+         }
+
+         .stat-danger .stat-icon {
+             background: linear-gradient(135deg, #fa709a, #fee140);
+         }
+
+         .stat-success .stat-icon {
+             background: linear-gradient(135deg, #43e97b, #38f9d7);
+         }
+
+         .welcome-box {
+             background: linear-gradient(135deg, #667eea, #764ba2);
+             color: white;
+             border-radius: 18px;
+             padding: 20px;
+             box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+         }
+
+         .pro-stat-card {
+             position: relative;
+             background: #fff;
+             border-radius: 18px;
+             padding: 22px;
+             height: 140px;
+             display: flex;
+             align-items: center;
+             gap: 16px;
+             box-shadow: 0 12px 35px rgba(0, 0, 0, .08);
+             transition: .3s ease;
+             overflow: hidden;
+         }
+
+         .pro-stat-card:hover {
+             transform: translateY(-6px);
+             box-shadow: 0 18px 45px rgba(0, 0, 0, .12);
+         }
+
+         /* ICON */
+         .pro-stat-card .icon {
+             width: 54px;
+             height: 54px;
+             border-radius: 14px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             font-size: 24px;
+             color: #fff;
+         }
+
+         /* CONTENT */
+         .pro-stat-card .content span {
+             font-size: 13px;
+             color: #6c757d;
+         }
+
+         .pro-stat-card .content h2 {
+             margin: 4px 0 0;
+             font-weight: 800;
+         }
+
+         /* INDICATOR LINE */
+         .pro-stat-card .indicator {
+             position: absolute;
+             bottom: 0;
+             left: 0;
+             height: 5px;
+             width: 100%;
+             opacity: .9;
+         }
+
+         /* COLOR THEMES */
+         .pro-stat-card.blue .icon {
+             background: linear-gradient(135deg, #4facfe, #00f2fe);
+         }
+
+         .pro-stat-card.blue .indicator {
+             background: #4facfe;
+         }
+
+         .pro-stat-card.green .icon {
+             background: linear-gradient(135deg, #43e97b, #38f9d7);
+         }
+
+         .pro-stat-card.green .indicator {
+             background: #43e97b;
+         }
+
+         .pro-stat-card.orange .icon {
+             background: linear-gradient(135deg, #f7971e, #ffd200);
+         }
+
+         .pro-stat-card.orange .indicator {
+             background: #f7971e;
+         }
+
+         .pro-stat-card.red .icon {
+             background: linear-gradient(135deg, #fa709a, #fee140);
+         }
+
+         .pro-stat-card.red .indicator {
+             background: #fa709a;
+         }
  </style>

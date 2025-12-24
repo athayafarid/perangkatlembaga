@@ -36,18 +36,11 @@
             <div class="row mb-4">
                 <div class="col-12">
                     <div class="card border-0 shadow-sm">
-                        <div class="card-body d-flex justify-content-between align-items-center">
+                        <div class="welcome-box">
                             <div>
-                                <h4 class="fw-bold mb-1">
-                                    👋 Selamat Datang, {{ $user->name }}
-                                </h4>
-                                <p class="text-muted mb-0">
-                                    Role: <strong>{{ ucfirst($user->role ?? 'Admin') }}</strong>
-                                </p>
+                                <h4>👋 Selamat Datang, Muhammad Farid Athaya</h4>
+                                <span class="badge bg-success">Admin Online</span>
                             </div>
-                            <span class="badge bg-success px-3 py-2">
-                                Online
-                            </span>
                         </div>
                     </div>
                 </div>
@@ -68,22 +61,15 @@
 
                 @foreach ($cards as $c)
                     <div class="col-md-6 col-xl-4">
-                        <div class="card stat-card border-0 shadow-sm">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h6 class="text-muted mb-1">{{ $c['title'] }}</h6>
-                                        <h3 class="fw-bold mb-0">{{ $c['value'] }}</h3>
-                                    </div>
-                                    <div class="stat-icon bg-light-{{ $c['color'] }} text-{{ $c['color'] }}">
-                                        <i class="ti {{ $c['icon'] }}"></i>
-                                    </div>
-                                </div>
+                        <div class="stat-card stat-{{ $c['color'] }}">
+                            <div class="stat-icon">
+                                <i class="ti {{ $c['icon'] }}"></i>
+                            </div>
 
-                                <div class="progress progress-thin">
-                                    <div class="progress-bar bg-{{ $c['color'] }}" style="width: 70%"></div>
-                                </div>
-                                <small class="text-muted">Update data terakhir</small>
+                            <div class="stat-content">
+                                <span class="stat-title">{{ $c['title'] }}</span>
+                                <h2 class="stat-number">{{ $c['value'] }}</h2>
+                                <small class="stat-meta">Update data terakhir</small>
                             </div>
                         </div>
                     </div>
@@ -92,51 +78,46 @@
             </div>
 
             {{-- Statistik Kelembagaan --}}
-            <div class="row mt-5">
-                <div class="col-12 mb-3">
-                    <h5 class="dashboard-title">
-                        Statistik Kelembagaan Desa
-                    </h5>
-                </div>
+            <div class="row g-4 mt-4">
 
                 @php
-                    $lembagaCards = [
+                    $stats = [
                         [
                             'title' => 'Perangkat Desa',
                             'value' => $perangkat,
                             'icon' => 'ti-building',
-                            'color' => 'primary',
+                            'color' => 'blue',
                         ],
-                        [
-                            'title' => 'Lembaga Desa',
-                            'value' => $lembaga,
-                            'icon' => 'ti-briefcase',
-                            'color' => 'success',
-                        ],
-                        ['title' => 'Jabatan Lembaga', 'value' => $jabatan, 'icon' => 'ti-id', 'color' => 'warning'],
+                        ['title' => 'Lembaga Desa', 'value' => $lembaga, 'icon' => 'ti-briefcase', 'color' => 'green'],
+                        ['title' => 'Jabatan Lembaga', 'value' => $jabatan, 'icon' => 'ti-id', 'color' => 'orange'],
                         [
                             'title' => 'Anggota Lembaga',
                             'value' => $anggota,
                             'icon' => 'ti-user-check',
-                            'color' => 'danger',
+                            'color' => 'red',
                         ],
                     ];
                 @endphp
 
-                @foreach ($lembagaCards as $l)
+                @foreach ($stats as $s)
                     <div class="col-md-6 col-xl-3">
-                        <div class="card stat-card border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <div class="stat-icon mx-auto mb-3 bg-light-{{ $l['color'] }} text-{{ $l['color'] }}">
-                                    <i class="ti {{ $l['icon'] }}"></i>
-                                </div>
-                                <h6 class="mb-1">{{ $l['title'] }}</h6>
-                                <h3 class="fw-bold">{{ $l['value'] }}</h3>
+                        <div class="pro-stat-card {{ $s['color'] }}">
+                            <div class="icon">
+                                <i class="ti {{ $s['icon'] }}"></i>
                             </div>
+
+                            <div class="content">
+                                <span>{{ $s['title'] }}</span>
+                                <h2>{{ $s['value'] }}</h2>
+                            </div>
+
+                            <div class="indicator"></div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
+
 
 
             {{--  end main content    --}}

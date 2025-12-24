@@ -131,7 +131,7 @@
                                         alt="user-image" class="user-avtar wid-35">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h6 class="mb-1">Stebin Ben</h6>
+                                    <h6 class="mb-1">{{ Auth::user()->name ?? 'User' }}</h6>
                                     <span>UI/UX Designer</span>
                                 </div>
                                 <a href="#!" class="pc-head-link bg-transparent"><i
@@ -145,7 +145,7 @@
                                     aria-controls="drp-tab-1" aria-selected="true"><i class="ti ti-user"></i>
                                     Profile</button>
                             </li>
-                            
+
                         </ul>
                         <div class="tab-content" id="mysrpTabContent">
                             <div class="tab-pane fade show active" id="drp-tab-1" role="tabpanel"
