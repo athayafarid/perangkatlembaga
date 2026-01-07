@@ -76,12 +76,12 @@
 
                                             <div class="rw-actions">
                                                 @if (auth()->user()->role === 'Admin')
-                                                    <a href="{{ route('lembaga_desa.edit', $l->lembaga_id) }}"
+                                                    <a href="{{ route('lembaga_desa.edit', $l) }}"
                                                         class="btn btn-icon btn-warning">
                                                         <i class="bi bi-pencil"></i>
                                                     </a>
 
-                                                    <form action="{{ route('lembaga_desa.destroy', $l->lembaga_id) }}"
+                                                    <form action="{{ route('lembaga_desa.destroy', $l) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')

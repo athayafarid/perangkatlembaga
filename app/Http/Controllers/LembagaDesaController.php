@@ -52,12 +52,12 @@ class LembagaDesaController extends Controller
     /* =========================
        EDIT
     ========================= */
-    public function edit(LembagaDesa $lembaga)
+    public function edit(LembagaDesa $lembaga_desa)
     {
-        return view('lembaga.edit', compact('lembaga'));
+        return view('lembaga.edit', compact('lembaga_desa'));
     }
 
-    public function update(Request $request, LembagaDesa $lembaga)
+    public function update(Request $request, LembagaDesa $lembaga_desa)
     {
         $request->validate([
             'nama_lembaga' => 'required|string|max:255',
@@ -68,13 +68,13 @@ class LembagaDesaController extends Controller
         $data = $request->only(['nama_lembaga', 'deskripsi']);
 
         if ($request->hasFile('logo')) {
-            if ($lembaga->logo) {
-                Storage::disk('public')->delete($lembaga->logo);
+            if ($lembaga_desa->logo) {
+                Storage::disk('public')->delete($lembaga_desa->logo);
             }
             $data['logo'] = $request->file('logo')->store('logo_lembaga', 'public');
         }
 
-        $lembaga->update($data);
+        $lembaga_desa->update($data);
 
         return redirect()
             ->route('lembaga_desa.index')
@@ -84,13 +84,13 @@ class LembagaDesaController extends Controller
     /* =========================
        DELETE
     ========================= */
-    public function destroy(LembagaDesa $lembaga)
+    public function destroy(LembagaDesa $lembaga_desa)
     {
-        if ($lembaga->logo) {
-            Storage::disk('public')->delete($lembaga->logo);
+        if ($lembaga_desa->logo) {
+            Storage::disk('public')->delete($lembaga_desa->logo);
         }
 
-        $lembaga->delete();
+        $lembaga_desa->delete();
 
         return back()->with('success', 'Data lembaga dihapus');
     }

@@ -1378,4 +1378,120 @@
          .pro-stat-card.red .indicator {
              background: #fa709a;
          }
+
+         /* =========================
+   CARD FORM – PERANGKAT DESA
+========================= */
+.card-custom {
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    overflow: hidden;
+}
+
+/* =========================
+   HEADER BIRU GELAP (FIX)
+========================= */
+.card-header-blue {
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+    color: #ffffff;
+    padding: 18px 22px;
+    border-bottom: none;
+}
+
+.card-header-blue h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* tombol kembali */
+.card-header-blue .btn-light {
+    background: #ffffff;
+    color: #0f172a;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+}
+
+.card-header-blue .btn-light:hover {
+    background: #e5e7eb;
+}
+
+/* =========================
+   FORM STYLE
+========================= */
+.card-body {
+    padding: 26px;
+}
+
+.form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+}
+
+.form-control,
+.form-select,
+textarea {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    border: 1px solid #cbd5e1;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+}
+
+/* =========================
+   BUTTON UPDATE (TETAP HIJAU)
+========================= */
+.btn-primary {
+    background: #0f2d58;
+    border: none;
+    border-radius: 999px;
+    padding: 8px 26px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #102450;
+}
+
+.card-header-blue {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #ffffff;
+    padding: 18px 22px;
+    position: relative;
+    z-index: 1;
+}
+
+/* PAKSA TEKS HEADER PUTIH */
+.card-header-blue h4,
+.card-header-blue small {
+    color: #ffffff !important;
+    position: relative;
+    z-index: 2;
+}
+
+/* subtitle */
+.card-header-blue small {
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+
  </style>

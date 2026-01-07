@@ -9,7 +9,7 @@
     <div class="card card-form">
 
         {{-- HEADER --}}
-        <div class="card-header-green d-flex justify-content-between align-items-center">
+        <div class="card-header-blue d-flex justify-content-between align-items-center">
             <h4 class="mb-0">
                 <i class="bi bi-plus-circle"></i> Tambah Lembaga Desa
             </h4>
